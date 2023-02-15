@@ -1,0 +1,13 @@
+package com.hexagonal.coupon;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class CouponFifoConcurrencyIssueApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
