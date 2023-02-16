@@ -35,4 +35,8 @@ class CouponJpaEntity extends BaseTimeJpaEntity {
 
     @Column(name = "COU_REMAIN_QUANTITY")
     private int remainQuantity;
+
+    static CouponJpaEntity withId(Long couponId) {
+        return new CouponJpaEntity(couponId, null, 0, 0, 0);
+    }
 }

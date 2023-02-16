@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MemberCoupon {
     private final Long id;
-    private final Coupon coupon;
     private final Member member;
+    private final Coupon coupon;
     private final UseType useType;
     private final LocalDateTime createDateTime;
     private final LocalDateTime useDateTime;

@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-class MemberCouponJpaEntity {
+class MemberCouponJpaEntity extends BaseTimeJpaEntity {
 
     @Id
     @Column(name = "MEM_COU_ID")
@@ -32,18 +32,21 @@ class MemberCouponJpaEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "COU_ID")
-    private CouponJpaEntity coupon;
+    @JoinColumn(name = "MEM_ID")
+    private MemberJpaEntity member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEM_ID")
-    private MemberJpaJpaEntity member;
+    @JoinColumn(name = "COU_ID")
+    private CouponJpaEntity coupon;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "MEM_COU_USE")
     private UseType useType;
 
-
-    private LocalDateTime createDateTime;
+    @Column(name = "MEM_COU_USE_DATETIME")
     private LocalDateTime useDateTime;
+
+    static MemberCouponJpaEntity withMemberIdAndCouponId(Long memberId, Long couponId) {
+        return new MemberCouponJpaEntity(null, MemberJpaEntity.withId(memberId), CouponJpaEntity.withId(couponId), UseType.UNUSED, null);
+    }
 }

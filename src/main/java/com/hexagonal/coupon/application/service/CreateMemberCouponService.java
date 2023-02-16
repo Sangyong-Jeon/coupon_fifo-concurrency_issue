@@ -36,7 +36,7 @@ class CreateMemberCouponService implements CreateMemberCouponUseCase {
     }
 
     private boolean isNotStock(Long couponId) {
-        return !loadCouponPort.loadCoupon(couponId).isNotStock();
+        return loadCouponPort.loadCoupon(couponId).isNotStock();
     }
 
     private boolean isDuplicateCoupon(CreateMemberCouponCommand command) {
