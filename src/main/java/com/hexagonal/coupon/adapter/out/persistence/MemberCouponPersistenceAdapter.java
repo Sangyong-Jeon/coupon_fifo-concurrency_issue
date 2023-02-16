@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-class MemberCouponPersistenceAdapter implements LoadAllCouponsOfMemberPort, UpdateCouponStatePort, CreateMemberCouponPort, FindCouponOfMemberPort {
+class MemberCouponPersistenceAdapter implements LoadAllCouponsOfMemberPort, CreateMemberCouponPort, FindCouponOfMemberPort {
 
     private final CouponRepository couponRepository;
     private final MemberCouponRepository memberCouponRepository;
@@ -26,11 +26,6 @@ class MemberCouponPersistenceAdapter implements LoadAllCouponsOfMemberPort, Upda
                 .stream()
                 .map(memberCouponMapper::mapToDomainEntity)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public void decreaseRemainQuantity(Long couponId) {
-        couponRepository.decreaseRemainQuantityById(couponId);
     }
 
     @Override
