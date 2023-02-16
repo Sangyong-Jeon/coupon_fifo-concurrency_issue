@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-class MemberJpaJpaEntity extends BaseTimeJpaEntity {
+class MemberJpaEntity extends BaseTimeJpaEntity {
 
     @Id
     @Column(name = "MEM_ID")
@@ -34,6 +34,7 @@ class MemberJpaJpaEntity extends BaseTimeJpaEntity {
     @Column(name = "MEM_EMAIL")
     private String email;
 
-    @Column(name = "MEM_CREATE_DATETIME")
-    private LocalDateTime createDateTime;
+    static MemberJpaEntity withId(Long memberId) {
+        return new MemberJpaEntity(memberId, null, null, null);
+    }
 }

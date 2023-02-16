@@ -14,7 +14,7 @@ class MemberCouponApiController {
     private final CreateMemberCouponUseCase createMemberCouponUseCase;
 
     @PostMapping("/members/{memberId}/coupons/{couponId}")
-    public boolean createMemberCoupon(@PathVariable Long memberId,
+    boolean createMemberCoupon(@PathVariable Long memberId,
                                       @PathVariable Long couponId) {
         return createMemberCouponUseCase.createMemberCoupon(new CreateMemberCouponCommand(memberId, couponId));
     }

@@ -13,5 +13,4 @@ public class Member {
     private final String name;
     private final String phone;
     private final String email;
-    private final LocalDateTime createDateTime;
 }
