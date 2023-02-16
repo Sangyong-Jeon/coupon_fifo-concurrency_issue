@@ -2,9 +2,9 @@ package com.hexagonal.coupon.application.service;
 
 import com.hexagonal.coupon.application.port.in.CreateMemberCouponCommand;
 import com.hexagonal.coupon.application.port.in.CreateMemberCouponUseCase;
+import com.hexagonal.coupon.application.port.out.FindCouponOfMemberPort;
 import com.hexagonal.coupon.application.port.out.LoadCouponPort;
 import com.hexagonal.coupon.application.port.out.CreateMemberCouponPort;
-import com.hexagonal.coupon.application.port.out.LoadAllCouponsOfMemberPort;
 import com.hexagonal.coupon.application.port.out.UpdateCouponStatePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,9 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 class CreateMemberCouponService implements CreateMemberCouponUseCase {
 
     private final LoadCouponPort loadCouponPort;
-    private final LoadAllCouponsOfMemberPort loadAllCouponsOfMemberPort;
     private final CreateMemberCouponPort createMemberCouponPort;
     private final UpdateCouponStatePort updateCouponStatePort;
+    private final FindCouponOfMemberPort findCouponOfMemberPort;
 
     @Override
     public boolean createMemberCoupon(CreateMemberCouponCommand command) {
@@ -40,7 +40,6 @@ class CreateMemberCouponService implements CreateMemberCouponUseCase {
     }
 
     private boolean isDuplicateCoupon(CreateMemberCouponCommand command) {
-        return loadAllCouponsOfMemberPort.loadAllCouponsOfMember(command.getMemberId())
-                .stream().anyMatch(mc -> mc.getCoupon().getId().equals(command.getCouponId()));
+        return findCouponOfMemberPort.findCouponOfMember(command.getMemberId(), command.getCouponId()).isPresent();
     }
 }

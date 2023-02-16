@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 interface MemberCouponRepository extends JpaRepository<MemberCouponJpaEntity, Long> {
 
@@ -14,4 +15,7 @@ interface MemberCouponRepository extends JpaRepository<MemberCouponJpaEntity, Lo
             "join fetch mc.coupon " +
             "where mc.member.id = :memberId")
     List<MemberCouponJpaEntity> findAllByMemberId(@Param("memberId") Long memberId);
+
+    @EntityGraph(attributePaths = {"member"})
+    Optional<MemberCouponJpaEntity> findByMemberIdAndCouponId(Long memberId, Long couponId);
 }
