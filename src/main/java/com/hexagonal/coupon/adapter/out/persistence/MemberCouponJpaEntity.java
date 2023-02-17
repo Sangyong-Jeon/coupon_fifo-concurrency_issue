@@ -28,7 +28,7 @@ class MemberCouponJpaEntity extends BaseTimeJpaEntity {
 
     @Id
     @Column(name = "MEM_COU_ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

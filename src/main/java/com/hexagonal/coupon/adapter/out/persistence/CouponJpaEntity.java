@@ -21,7 +21,7 @@ class CouponJpaEntity extends BaseTimeJpaEntity {
 
     @Id
     @Column(name = "COU_ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "COU_NAME")
