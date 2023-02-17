@@ -1,6 +1,8 @@
 package com.hexagonal.coupon.application.port.out;
 
+import com.hexagonal.coupon.domain.MemberCoupon;
+
 public interface CreateMemberCouponPort {
 
-    void createMemberCoupon(Long memberId, Long couponId);
+    MemberCoupon createMemberCoupon(Long memberId, Long couponId);
 }

@@ -1,6 +1,7 @@
 package com.hexagonal.coupon.adapter.in.web;
 
 import com.hexagonal.coupon.application.port.in.CreateMemberCouponCommand;
+import com.hexagonal.coupon.application.port.in.CreateMemberCouponResponse;
 import com.hexagonal.coupon.application.port.in.CreateMemberCouponUseCase;
 import com.hexagonal.coupon.application.port.in.UseMemberCouponCommand;
 import com.hexagonal.coupon.application.port.in.UseMemberCouponResponse;
@@ -19,7 +20,7 @@ class MemberCouponApiController {
     private final UseMemberCouponUseCase useMemberCouponUseCase;
 
     @PostMapping("/members/{memberId}/coupons/{couponId}")
-    boolean createMemberCoupon(@PathVariable Long memberId,
+    CreateMemberCouponResponse createMemberCoupon(@PathVariable Long memberId,
                                @PathVariable Long couponId) {
         return createMemberCouponUseCase.createMemberCoupon(new CreateMemberCouponCommand(memberId, couponId));
     }

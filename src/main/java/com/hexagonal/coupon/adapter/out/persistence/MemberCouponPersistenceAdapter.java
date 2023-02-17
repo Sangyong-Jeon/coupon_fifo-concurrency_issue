@@ -28,9 +28,10 @@ class MemberCouponPersistenceAdapter implements LoadAllCouponsOfMemberPort, Crea
     }
 
     @Override
-    public void createMemberCoupon(Long memberId, Long couponId) {
+    public MemberCoupon createMemberCoupon(Long memberId, Long couponId) {
         MemberCouponJpaEntity memberCouponJpaEntity = MemberCouponJpaEntity.withMemberIdAndCouponId(memberId, couponId);
         memberCouponRepository.save(memberCouponJpaEntity);
+        return memberCouponMapper.mapToDomainEntity(memberCouponJpaEntity);
     }
 
     @Override
