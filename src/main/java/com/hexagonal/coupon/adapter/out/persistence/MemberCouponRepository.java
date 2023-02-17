@@ -16,6 +16,6 @@ interface MemberCouponRepository extends JpaRepository<MemberCouponJpaEntity, Lo
             "where mc.member.id = :memberId")
     List<MemberCouponJpaEntity> findAllByMemberId(@Param("memberId") Long memberId);
 
-    @EntityGraph(attributePaths = {"member"})
+    @EntityGraph(attributePaths = {"member", "coupon"})
     Optional<MemberCouponJpaEntity> findByMemberIdAndCouponId(Long memberId, Long couponId);
 }
