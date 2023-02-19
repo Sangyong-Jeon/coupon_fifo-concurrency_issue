@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import static com.hexagonal.coupon.adapter.out.persistence.QCouponJpaEntity.*;
 
 @RequiredArgsConstructor
-public class CouponRepositoryCustomImpl implements CouponRepositoryCustom {
+class CouponRepositoryCustomImpl implements CouponRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
