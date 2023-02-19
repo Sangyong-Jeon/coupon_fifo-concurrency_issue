@@ -5,11 +5,14 @@ import com.hexagonal.coupon.application.port.in.UseMemberCouponResponse;
 import com.hexagonal.coupon.application.port.in.UseMemberCouponUseCase;
 import com.hexagonal.coupon.application.port.out.FindCouponOfMemberPort;
 import com.hexagonal.coupon.application.port.out.UseMemberCouponPort;
+import com.hexagonal.coupon.common.exception.MemberCouponNotExistException;
+import com.hexagonal.coupon.common.exception.UsedCouponException;
 import com.hexagonal.coupon.domain.MemberCoupon;
-import com.hexagonal.coupon.domain.UseType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.hexagonal.coupon.domain.UseType.*;
 
 @Service
 @Transactional
@@ -22,10 +25,11 @@ class UseMemberCouponService implements UseMemberCouponUseCase {
     @Override
     public UseMemberCouponResponse useMemberCoupon(UseMemberCouponCommand command) {
         MemberCoupon memberCoupon = findCouponOfMemberPort.findCouponOfMember(command.getMemberId(), command.getCouponId())
-                .orElseThrow(IllegalArgumentException::new);
-        if (UseType.USE.equals(memberCoupon.getUseType())) {
-            throw new IllegalStateException();
+                .orElseThrow(MemberCouponNotExistException::new);
+        if (USE.equals(memberCoupon.getUseType())) {
+            throw new UsedCouponException();
         }
+
         MemberCoupon useMemberCoupon = MemberCoupon.use(memberCoupon);
         useMemberCouponPort.useMemberCoupon(useMemberCoupon);
         return new UseMemberCouponResponse(useMemberCoupon.getId(), command.getCouponId(), useMemberCoupon.getUseDateTime());

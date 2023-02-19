@@ -7,6 +7,8 @@ import com.hexagonal.coupon.application.port.out.FindCouponOfMemberPort;
 import com.hexagonal.coupon.application.port.out.LoadCouponPort;
 import com.hexagonal.coupon.application.port.out.CreateMemberCouponPort;
 import com.hexagonal.coupon.application.port.out.UpdateCouponStatePort;
+import com.hexagonal.coupon.common.exception.CouponNotRemainException;
+import com.hexagonal.coupon.common.exception.DuplicateCouponException;
 import com.hexagonal.coupon.domain.MemberCoupon;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,11 +27,11 @@ class CreateMemberCouponService implements CreateMemberCouponUseCase {
     @Override
     public CreateMemberCouponResponse createMemberCoupon(CreateMemberCouponCommand command) {
         if (isNotStock(command.getCouponId())) {
-            throw new IllegalStateException();
+            throw new CouponNotRemainException();
         }
 
         if (isDuplicateCoupon(command)) {
-            throw new IllegalStateException();
+            throw new DuplicateCouponException();
         }
 
         updateCouponStatePort.decreaseRemainQuantity(command.getCouponId());

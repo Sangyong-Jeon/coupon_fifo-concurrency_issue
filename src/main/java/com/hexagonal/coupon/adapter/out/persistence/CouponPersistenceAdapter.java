@@ -3,6 +3,7 @@ package com.hexagonal.coupon.adapter.out.persistence;
 import com.hexagonal.coupon.application.port.out.CreateCouponPort;
 import com.hexagonal.coupon.application.port.out.LoadCouponPort;
 import com.hexagonal.coupon.application.port.out.UpdateCouponStatePort;
+import com.hexagonal.coupon.common.exception.CouponNotExistException;
 import com.hexagonal.coupon.domain.Coupon;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ class CouponPersistenceAdapter implements LoadCouponPort, CreateCouponPort, Upda
     @Override
     public Coupon loadCoupon(Long couponId) {
         CouponJpaEntity couponJpaEntity = couponRepository.findById(couponId)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(CouponNotExistException::new);
         return couponMapper.mapToDomainEntity(couponJpaEntity);
     }
 
