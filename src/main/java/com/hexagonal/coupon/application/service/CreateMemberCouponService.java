@@ -8,7 +8,6 @@ import com.hexagonal.coupon.application.port.out.LoadCouponPort;
 import com.hexagonal.coupon.application.port.out.CreateMemberCouponPort;
 import com.hexagonal.coupon.application.port.out.UpdateCouponStatePort;
 import com.hexagonal.coupon.common.exception.CouponNotRemainException;
-import com.hexagonal.coupon.common.exception.DuplicateCouponException;
 import com.hexagonal.coupon.domain.MemberCoupon;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,9 +29,7 @@ class CreateMemberCouponService implements CreateMemberCouponUseCase {
             throw new CouponNotRemainException();
         }
 
-        if (isDuplicateCoupon(command)) {
-            throw new DuplicateCouponException();
-        }
+        isDuplicateCoupon(command);
 
         updateCouponStatePort.decreaseRemainQuantity(command.getCouponId());
         MemberCoupon memberCoupon = createMemberCouponPort.createMemberCoupon(command.getMemberId(), command.getCouponId());
@@ -43,7 +40,7 @@ class CreateMemberCouponService implements CreateMemberCouponUseCase {
         return loadCouponPort.loadCoupon(couponId).isNotStock();
     }
 
-    private boolean isDuplicateCoupon(CreateMemberCouponCommand command) {
-        return findCouponOfMemberPort.findCouponOfMember(command.getMemberId(), command.getCouponId()).isPresent();
+    private void isDuplicateCoupon(CreateMemberCouponCommand command) {
+        findCouponOfMemberPort.findCouponOfMember(command.getMemberId(), command.getCouponId());
     }
 }

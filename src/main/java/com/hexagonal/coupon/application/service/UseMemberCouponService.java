@@ -24,8 +24,7 @@ class UseMemberCouponService implements UseMemberCouponUseCase {
 
     @Override
     public UseMemberCouponResponse useMemberCoupon(UseMemberCouponCommand command) {
-        MemberCoupon memberCoupon = findCouponOfMemberPort.findCouponOfMember(command.getMemberId(), command.getCouponId())
-                .orElseThrow(MemberCouponNotExistException::new);
+        MemberCoupon memberCoupon = findCouponOfMemberPort.findCouponOfMember(command.getMemberId(), command.getCouponId());
         if (USE.equals(memberCoupon.getUseType())) {
             throw new UsedCouponException();
         }
