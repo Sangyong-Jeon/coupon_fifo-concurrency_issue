@@ -3,7 +3,6 @@ package com.hexagonal.coupon.adapter.out.persistence;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
