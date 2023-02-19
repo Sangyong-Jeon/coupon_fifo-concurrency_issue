@@ -4,12 +4,12 @@ import com.hexagonal.coupon.application.port.out.CreateMemberCouponPort;
 import com.hexagonal.coupon.application.port.out.FindCouponOfMemberPort;
 import com.hexagonal.coupon.application.port.out.LoadAllCouponsOfMemberPort;
 import com.hexagonal.coupon.application.port.out.UseMemberCouponPort;
-import com.hexagonal.coupon.common.exception.MemberCouponNotExistException;
 import com.hexagonal.coupon.domain.MemberCoupon;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -35,10 +35,9 @@ class MemberCouponPersistenceAdapter implements LoadAllCouponsOfMemberPort, Crea
     }
 
     @Override
-    public MemberCoupon findCouponOfMember(Long memberId, Long couponId) {
-        return memberCouponMapper.mapToDomainEntity(
-                memberCouponRepository.findByMemberIdAndCouponId(memberId, couponId)
-                        .orElseThrow(MemberCouponNotExistException::new));
+    public Optional<MemberCoupon> findCouponOfMember(Long memberId, Long couponId) {
+        Optional<MemberCouponJpaEntity> memberCoupon = memberCouponRepository.findByMemberIdAndCouponId(memberId, couponId);
+        return memberCoupon.map(memberCouponMapper::mapToDomainEntity);
     }
 
     @Override
