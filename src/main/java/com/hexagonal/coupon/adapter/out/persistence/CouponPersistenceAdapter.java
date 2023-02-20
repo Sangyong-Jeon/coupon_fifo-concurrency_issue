@@ -17,7 +17,7 @@ class CouponPersistenceAdapter implements LoadCouponPort, CreateCouponPort, Upda
 
     @Override
     public Coupon loadCoupon(Long couponId) {
-        CouponJpaEntity couponJpaEntity = couponRepository.findById(couponId)
+        CouponJpaEntity couponJpaEntity = couponRepository.findLockById(couponId)
                 .orElseThrow(CouponNotExistException::new);
         return couponMapper.mapToDomainEntity(couponJpaEntity);
     }
