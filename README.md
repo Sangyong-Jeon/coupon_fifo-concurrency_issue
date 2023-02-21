@@ -58,3 +58,7 @@ DB만 이용했을 때 감당하기 힘들다는 것을 가정한다면 캐시�
 - 발급된 회원쿠폰 개수 : 1000개만 발급된 것을 볼 수 있음
 <img width="484" alt="image" src="https://user-images.githubusercontent.com/80039556/220296750-f5547c97-c4a1-4de2-bef1-efb66e67c479.png">
 
+- 회원쿠폰 테이블에서 중복 발급되었는지 조회 : 중복 발급이 없는 것을 볼 수 있음
+  - 11번 쿠폰에 대해서만 발급요청을 했기에 회원id(mem_id)가 중복됐는지만 체크하면 됨
+<img width="269" alt="image" src="https://user-images.githubusercontent.com/80039556/220330483-123f1a72-4ae4-42dc-8210-08205191e6b1.png">
+
