@@ -34,16 +34,27 @@ DB만 이용했을 때 감당하기 힘들다는 것을 가정한다면 캐시�
 ### 2-1. 백엔드 아키텍처
 <img width="798" alt="image" src="https://user-images.githubusercontent.com/80039556/220278524-9dbd7c71-4d01-4fc1-b07e-c44cc7a45718.png">
 
-### 2-2. 데이터베이스 ERD
+### 2-2. 육각형 아키텍처 패키지 구조
+- 회원쿠폰 발급 API에 관한 클래스만 적은 패키지 구조
+<img width="665" alt="image" src="https://user-images.githubusercontent.com/80039556/220345959-70a49133-d86a-4a1f-bd6e-bc75440394dc.png">
+
+<img width="731" alt="image" src="https://user-images.githubusercontent.com/80039556/220345884-c3beb04d-f929-4831-9981-e696c26206b5.png">
+
+<img width="1100" alt="image" src="https://user-images.githubusercontent.com/80039556/220341229-e8e13aac-0d12-43df-afcd-abc837712e6e.png">
+
+<img width="656" alt="image" src="https://user-images.githubusercontent.com/80039556/220346288-a175bf58-fae0-4a34-95aa-78c9e0e0cc4a.png">
+
+
+### 2-3. 데이터베이스 ERD
 <img width="854" alt="image" src="https://user-images.githubusercontent.com/80039556/220288462-8f463061-52a3-4a58-af00-04a98fddb5be.png">
 - COUPON : 쿠폰 정보
 - MEMBER : 회원 정보
 - MEMBER_COUPON : 회원이 발급받은 쿠폰 내역
 
-### 2-3 API 문서화
+### 2-4 API 문서화
 <img width="1141" alt="image" src="https://user-images.githubusercontent.com/80039556/220289029-3f706454-526f-4929-adcf-3091563ef8b1.png">
 
-### 2-4 부하 테스트
+### 2-5 부하 테스트
 
 <img width="247" alt="image" src="https://user-images.githubusercontent.com/80039556/220295853-4f4a2d18-d61f-4c53-9a70-98ff4ec6ca0e.png">
 
