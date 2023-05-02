@@ -18,9 +18,14 @@ public class initDB {
 
     @PostConstruct
     public void init() {
-        for (int i = 1; i <= 200; i++) {
+        for (int i = 1; i <= 10000; i++) {
             createMemberPort.createMember(new Member((long) i, "이름" + i, "010-1111-1111", "test@naver.com"));
+        }
+
+        for (int i = 1; i <= 10; i++) {
             createCouponPort.createCoupon(new Coupon((long) i, "쿠폰" + i, 1000, 100, 100));
         }
+
+        createCouponPort.createCoupon(new Coupon(11L, "쿠폰11", 10000, 1000, 1000));
     }
 }

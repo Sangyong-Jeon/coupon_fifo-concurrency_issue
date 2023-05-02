@@ -21,8 +21,6 @@ class MemberCouponPersistenceAdapter implements LoadAllCouponsOfMemberPort, Crea
 
     private final MemberCouponRepository memberCouponRepository;
     private final MemberCouponMapper memberCouponMapper;
-    private final CouponRepository couponRepository;
-    private final MemberRepository memberRepository;
 
     @Override
     public List<MemberCoupon> loadAllCouponsOfMember(Long memberId) {
