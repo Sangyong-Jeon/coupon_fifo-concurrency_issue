@@ -11,7 +11,8 @@ public enum ErrorCode {
     COUPON_NOT_EXIST("400", "쿠폰이 존재하지 않습니다.", BAD_REQUEST),
     DUPLICATE_COUPON("400", "쿠폰을 이미 보유하고 있습니다.", BAD_REQUEST),
     USED_COUPON("400", "사용된 쿠폰입니다.", BAD_REQUEST),
-    MEMBER_COUPON_NOT_EXIST("400", "사용되지 않은 회원쿠폰이 존재하지 않습니다.", BAD_REQUEST);
+    MEMBER_COUPON_NOT_EXIST("400", "사용되지 않은 회원쿠폰이 존재하지 않습니다.", BAD_REQUEST),
+    MEMBER_NOT_EXIST("400", "회원이 존재하지 않습니다.", BAD_REQUEST);
 
     private final String code;
     private final String message;
