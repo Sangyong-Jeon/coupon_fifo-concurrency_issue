@@ -4,13 +4,10 @@ import com.hexagonal.coupon.application.port.out.CreateMemberCouponPort;
 import com.hexagonal.coupon.application.port.out.FindCouponOfMemberPort;
 import com.hexagonal.coupon.application.port.out.LoadAllCouponsOfMemberPort;
 import com.hexagonal.coupon.application.port.out.UseMemberCouponPort;
-import com.hexagonal.coupon.common.exception.CouponNotExistException;
 import com.hexagonal.coupon.domain.MemberCoupon;
-import com.hexagonal.coupon.domain.UseType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

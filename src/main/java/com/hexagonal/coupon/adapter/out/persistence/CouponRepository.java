@@ -10,4 +10,6 @@ interface CouponRepository extends JpaRepository<CouponJpaEntity, Long>, CouponR
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<CouponJpaEntity> findLockById(Long id);
+
+    Optional<CouponJpaEntity> findByName(String name);
 }

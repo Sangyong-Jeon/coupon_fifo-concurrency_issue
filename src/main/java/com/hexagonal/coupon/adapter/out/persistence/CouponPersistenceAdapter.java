@@ -2,6 +2,7 @@ package com.hexagonal.coupon.adapter.out.persistence;
 
 import com.hexagonal.coupon.application.port.out.CreateCouponPort;
 import com.hexagonal.coupon.application.port.out.DeleteCouponPort;
+import com.hexagonal.coupon.application.port.out.FindCouponPort;
 import com.hexagonal.coupon.application.port.out.LoadCouponPort;
 import com.hexagonal.coupon.application.port.out.UpdateCouponStatePort;
 import com.hexagonal.coupon.common.exception.CouponNotExistException;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-class CouponPersistenceAdapter implements LoadCouponPort, CreateCouponPort, UpdateCouponStatePort, DeleteCouponPort {
+class CouponPersistenceAdapter implements LoadCouponPort, CreateCouponPort, UpdateCouponStatePort, DeleteCouponPort, FindCouponPort {
 
     private final CouponMapper couponMapper;
     private final CouponRepository couponRepository;
@@ -36,5 +37,11 @@ class CouponPersistenceAdapter implements LoadCouponPort, CreateCouponPort, Upda
     @Override
     public void deleteCoupon(Long id) {
         couponRepository.deleteById(id);
+    }
+
+    @Override
+    public Coupon findCouponByName(String name) {
+        CouponJpaEntity couponJpaEntity = couponRepository.findByName(name).orElseThrow(CouponNotExistException::new);
+        return couponMapper.mapToDomainEntity(couponJpaEntity);
     }
 }

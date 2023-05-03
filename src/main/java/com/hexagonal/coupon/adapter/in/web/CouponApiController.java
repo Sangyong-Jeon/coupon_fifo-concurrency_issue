@@ -3,11 +3,13 @@ package com.hexagonal.coupon.adapter.in.web;
 import com.hexagonal.coupon.application.port.in.CreateCouponCommand;
 import com.hexagonal.coupon.application.port.in.CreateCouponUseCase;
 import com.hexagonal.coupon.application.port.in.DeleteCouponUseCase;
+import com.hexagonal.coupon.application.port.in.FindCouponResponse;
 import com.hexagonal.coupon.application.port.in.FindCouponUseCase;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,5 +37,11 @@ class CouponApiController {
     @DeleteMapping
     void deleteCoupon(@Parameter(description = "쿠폰아이디") @RequestParam Long id) {
         deleteCouponUseCase.deleteCoupon(id);
+    }
+
+    @ApiOperation("쿠폰이름으로 쿠폰조회")
+    @GetMapping
+    FindCouponResponse findCouponByName(@Parameter(description = "쿠폰명") @RequestParam String name) {
+        return findCouponUseCase.findCouponByName(name);
     }
 }
