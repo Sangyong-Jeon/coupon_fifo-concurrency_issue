@@ -10,6 +10,9 @@ import com.hexagonal.coupon.domain.Coupon;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 @RequiredArgsConstructor
 class CouponPersistenceAdapter implements LoadCouponPort, CreateCouponPort, UpdateCouponStatePort, DeleteCouponPort, FindCouponPort {
@@ -43,5 +46,13 @@ class CouponPersistenceAdapter implements LoadCouponPort, CreateCouponPort, Upda
     public Coupon findCouponByName(String name) {
         CouponJpaEntity couponJpaEntity = couponRepository.findByName(name).orElseThrow(CouponNotExistException::new);
         return couponMapper.mapToDomainEntity(couponJpaEntity);
+    }
+
+    @Override
+    public List<Coupon> findAllCoupons() {
+        return couponRepository.findAll()
+                .stream()
+                .map(couponMapper::mapToDomainEntity)
+                .collect(Collectors.toList());
     }
 }
