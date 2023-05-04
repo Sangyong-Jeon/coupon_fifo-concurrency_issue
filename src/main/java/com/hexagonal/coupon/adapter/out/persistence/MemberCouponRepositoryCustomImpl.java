@@ -35,7 +35,6 @@ class MemberCouponRepositoryCustomImpl implements MemberCouponRepositoryCustom {
         return Optional.ofNullable(queryFactory
                 .selectFrom(memberCouponJpaEntity)
                 .join(memberCouponJpaEntity.member, memberJpaEntity).fetchJoin()
-                .join(memberCouponJpaEntity.coupon, couponJpaEntity).fetchJoin()
                 .where(memberIdEq(memberId), couponIdEq(couponId))
                 .fetchOne());
     }
