@@ -42,4 +42,11 @@ class MemberCouponRepositoryCustomImpl implements MemberCouponRepositoryCustom {
     private BooleanExpression couponIdEq(Long couponId) {
         return (couponId != null) ? memberCouponJpaEntity.coupon.id.eq(couponId) : null;
     }
+
+    @Override
+    public void deleteAllByCouponId(Long couponId) {
+        queryFactory.delete(memberCouponJpaEntity)
+                .where(memberCouponJpaEntity.coupon.id.eq(couponId))
+                .execute();
+    }
 }

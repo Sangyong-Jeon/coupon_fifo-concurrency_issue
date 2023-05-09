@@ -1,6 +1,7 @@
 package com.hexagonal.coupon.adapter.out.persistence;
 
 import com.hexagonal.coupon.application.port.out.CreateMemberCouponPort;
+import com.hexagonal.coupon.application.port.out.DeleteMemberCouponPort;
 import com.hexagonal.coupon.application.port.out.FindCouponOfMemberPort;
 import com.hexagonal.coupon.application.port.out.LoadAllCouponsOfMemberPort;
 import com.hexagonal.coupon.application.port.out.UseMemberCouponPort;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-class MemberCouponPersistenceAdapter implements LoadAllCouponsOfMemberPort, CreateMemberCouponPort, FindCouponOfMemberPort, UseMemberCouponPort {
+class MemberCouponPersistenceAdapter implements LoadAllCouponsOfMemberPort, CreateMemberCouponPort, FindCouponOfMemberPort, UseMemberCouponPort, DeleteMemberCouponPort {
 
     private final MemberCouponRepository memberCouponRepository;
     private final MemberCouponMapper memberCouponMapper;
@@ -44,5 +45,10 @@ class MemberCouponPersistenceAdapter implements LoadAllCouponsOfMemberPort, Crea
     public void useMemberCoupon(MemberCoupon memberCoupon) {
         MemberCouponJpaEntity memberCouponJpaEntity = memberCouponMapper.mapToJpaEntity(memberCoupon);
         memberCouponRepository.save(memberCouponJpaEntity);
+    }
+
+    @Override
+    public void deleteAllByCouponId(Long couponId) {
+        memberCouponRepository.deleteAllByCouponId(couponId);
     }
 }

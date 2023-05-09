@@ -8,4 +8,6 @@ interface MemberCouponRepositoryCustom {
     List<MemberCouponJpaEntity> findAllByMemberId(Long memberId);
 
     Optional<MemberCouponJpaEntity> findByMemberIdAndCouponId(Long memberId, Long couponId);
+
+    void deleteAllByCouponId(Long couponId);
 }
