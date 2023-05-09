@@ -11,8 +11,13 @@ import com.hexagonal.coupon.common.exception.CouponNotRemainException;
 import com.hexagonal.coupon.common.exception.DuplicateCouponException;
 import com.hexagonal.coupon.domain.MemberCoupon;
 import lombok.RequiredArgsConstructor;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional
@@ -23,20 +28,38 @@ class CreateMemberCouponService implements CreateMemberCouponUseCase {
     private final CreateMemberCouponPort createMemberCouponPort;
     private final UpdateCouponStatePort updateCouponStatePort;
     private final FindCouponOfMemberPort findCouponOfMemberPort;
+    private final RedissonClient redissonClient;
+
+    @Value("${redis.lock.coupon}")
+    private String couponLockName;
 
     @Override
     public CreateMemberCouponResponse createMemberCoupon(CreateMemberCouponCommand command) {
-        if (isNotStock(command.getCouponId())) {
-            throw new CouponNotRemainException();
-        }
+        RLock lock = redissonClient.getLock(couponLockName);
 
-        if (isDuplicateCoupon(command)) {
-            throw new DuplicateCouponException();
-        }
+        try {
+            if (!lock.tryLock(10, 3, TimeUnit.SECONDS)) {
+                throw new RuntimeException("Lock 획득 실패");
+            }
 
-        updateCouponStatePort.decreaseRemainQuantity(command.getCouponId());
-        MemberCoupon memberCoupon = createMemberCouponPort.createMemberCoupon(command.getMemberId(), command.getCouponId());
-        return new CreateMemberCouponResponse(memberCoupon.getId(), command.getCouponId(), memberCoupon.getCreateDateTime());
+            if (isNotStock(command.getCouponId())) {
+                throw new CouponNotRemainException();
+            }
+
+            if (isDuplicateCoupon(command)) {
+                throw new DuplicateCouponException();
+            }
+
+            updateCouponStatePort.decreaseRemainQuantity(command.getCouponId());
+            MemberCoupon memberCoupon = createMemberCouponPort.createMemberCoupon(command.getMemberId(), command.getCouponId());
+            return new CreateMemberCouponResponse(memberCoupon.getId(), command.getCouponId(), memberCoupon.getCreateDateTime());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (lock != null && lock.isLocked()) {
+                lock.unlock();
+            }
+        }
     }
 
     private boolean isNotStock(Long couponId) {

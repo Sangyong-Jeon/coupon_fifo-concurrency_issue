@@ -30,6 +30,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'org.redisson:redisson-spring-boot-starter:3.17.0'
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
     compileOnly 'org.projectlombok:lombok'
