@@ -1,4 +1,4 @@
-# 실시간 쿠폰 발급 API 백엔드
+# 선착순 쿠폰 발급 API 백엔드
 
 ## 1. 프로젝트 개요
 ### 1-1. 프로젝트 소개
@@ -15,17 +15,19 @@
 - 쿠폰 발급 이벤트는 **특정 시간(짧은 시간)** 에 **대용량 트래픽** 발생
 - **수많은 동시 요청** 에서 제한적인 쿠폰수량과 선착순 발급에 대한 **정확성과 무결성** 을 지켜야 함
 
-현재는 DB에 Exclusive Lock(배타적 잠금)을 걸어 동시 요청에 대한 데이터 정확성과 무결성을 지키면서 해결하였습니다.
+DB에 Exclusive Lock(배타적 잠금)을 걸어 동시요청에 대한 데이터 정확성고 무결성을 지키면서 해결하였음.
 
-하지만 막대한 트래픽을 감당할 수 있을지는 잘 모르겠습니다. 
+하지만 막대한 트래픽이 왔을 때 해당 쿠폰 DB에 잠금을 걸었기에 쿠폰을 사용하는 다른 서비스도 대기를 하거나 데드락이 걸릴 가능성이 있습니다.
 
-DB만 이용했을 때 감당하기 힘들다는 것을 가정한다면 캐시를 이용하는 방법도 찾아봐야겠습니다.
+따라서 redis를 이용한 Distribution Lock(분산락)을 사용하게 되었습니다.
+
+분산락으로 하나의 공유자원(쿠폰)에 접근할 때 데이터 결함이 발생하지 않도록 원자성(atomic)을 보장하여 여러 서버에서의 동시성 이슈를 해결하였습니다.
 
 ### 1-3. 기술 스택
 
 - Langauge : `Java 11`
 - Framework : `Spring Boot 2.7.8`
-- Database : `MySQL 8.0`, `JPA`, `QueryDSL`
+- Database : `MySQL 8.0`, `JPA`, `QueryDSL`, `Redis`
 - API Documentation : `Swagger 3.0.0`
 
 <br>
@@ -73,3 +75,7 @@ DB만 이용했을 때 감당하기 힘들다는 것을 가정한다면 캐시�
   - 11번 쿠폰에 대해서만 발급요청을 했기에 회원id(mem_id)가 중복됐는지만 체크하면 됨
 <img width="269" alt="image" src="https://user-images.githubusercontent.com/80039556/220330483-123f1a72-4ae4-42dc-8210-08205191e6b1.png">
 
+### 2-6 쿠폰발급 테스트
+<img width="1023" alt="image" src="https://github.com/Sangyong-Jeon/coupon_fifo-concurrency_issue/assets/80039556/e0c56eaf-11be-4532-905c-194acfda7c50">
+
+- 15개 쓰레드 생성하여 10000명의 회원쿠폰 발급을 병렬처리 테스트함
