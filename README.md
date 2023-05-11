@@ -25,7 +25,7 @@ DB에 Exclusive Lock(배타적 잠금)을 걸어 동시요청에 대한 데이�
 
 ### 1-3. 기술 스택
 
-- Langauge : `Java 11`
+- Language : `Java 11`
 - Framework : `Spring Boot 2.7.8`
 - Database : `MySQL 8.0`, `JPA`, `QueryDSL`, `Redis`
 - API Documentation : `Swagger 3.0.0`
